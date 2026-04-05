@@ -122,11 +122,14 @@ let i=0;
 
 function typeEffect(){
   if(i<text.length){
-    document.getElementById("text").innerHTML+=text.charAt(i);
+    document.getElementById("text").innerHTML += text.charAt(i);
     i++;
     setTimeout(typeEffect,80);
   } else {
-    setTimeout(()=>nextScreen(),1500);
+    // 🔥 AUTO MOVE FIX
+    setTimeout(()=>{
+      nextScreen();
+    },1500); // 1.5 sec baad auto next
   }
 }
 typeEffect();
