@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Birthday 🎉</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+/* ✅ BODY FIX (no white issue) */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: black !important;
+  color: white;
+  font-family: Arial;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 🌌 Stars */
+.stars::after {
+  content: "";
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  background: white;
+  box-shadow:
+    20px 30px white, 100px 150px white, 200px 80px white,
+    300px 200px white, 400px 120px white, 500px 300px white,
+    600px 100px white, 700px 250px white;
+  animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle {
+  from {opacity: 0.3;}
+  to {opacity: 1;}
+}
+
+/* 💓 Hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  animation: floatUp 5s linear infinite;
+}
+@keyframes floatUp {
+  to {transform: translateY(-100vh);}
+}
+
+/* ✅ SCREEN TOP ALIGN FIX */
+.screen {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  justify-content: flex-start;   /* 🔥 TOP */
+  align-items: center;
+  flex-direction: column;
+  padding-top: 30px;
+  box-sizing: border-box;
+}
+
+.active {
+  display: flex;
+}
+
+/* 🎂 Image FIX */
+img {
+  max-width: 90%;
+  max-height: 35vh;
+  object-fit: contain;
+  border-radius: 15px;
+}
+
+/* 🎞️ Smooth slideshow */
+#slideshow {
+  transition: all 1s ease-in-out;
+}
+
+/* 📱 Responsive text */
+h1 { font-size: 6vw; }
+h2 { font-size: 5vw; }
+h3 { font-size: 5vw; }
+
+/* 🎉 Final text big */
+#screen5 h1 { font-size: 4vw; }
+#screen5 h2 { font-size: 3vw; }
+#screen5 h3 { font-size: 5vw; }
+
+/* Button */
+button {
+  padding: 12px 25px;
+  font-size: 18px;
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  color: white;
+  border: none;
+  border-radius: 12px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<audio id="music" preload="auto">
+  <source src="https://files.catbox.moe/k1lm56.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Screen 1 -->
+<div class="screen active" id="screen1">
+  <h1 id="text"></h1>
+</div>
+
+<!-- Screen 2 -->
+<div class="screen" id="screen2">
+  <img id="cake" src="https://i.postimg.cc/QdnZbNFk/Pngtree_happy_birthday_cake_transparent_background_14578946.png">
+  <button onclick="cutCake()">🎂 Cake Cut Kare</button>
+</div>
+
+<!-- Screen 3 -->
+<div class="screen" id="screen3">
+  <h2>
+ “बड़े भाई तो सच में बड़े ही होते हैं,<br>
+हर छोटी खुशी को भी खास बना देते हैं,<br>
+कभी कार में घुमाना, कभी पार्टी की रौनक बन जाना,<br>
+उनके साथ बिताया हर पल यादगार बन जाता है,<br>
+<br>
+ज़िंदगी की राहों में साथ यूँ ही बना रहे,<br>
+आपकी हंसी से हर दिन रोशन बना रहे,<br>
+
+Happy Birthday Bade Bhai 🎉❤️”
+  </h2>
+</div>
+
+<!-- Screen 4 -->
+<div class="screen" id="screen4">
+  <img id="slideshow">
+</div>
+
+<!-- Screen 5 -->
+<div class="screen" id="screen5">
+  <h1>🎉 HAPPY BIRTHDAY BADE BHAI 🎉</h1>
+  <h2> MAHADEV AAPKO HAMESHA KHUSH RAKHE 👨‍⚕️❤️</h2>
+  <h3> LOVE YOU 👨‍⚕️</h3>
+</div>
+
+<script>
+
+// 🎉 Typing
+let text = "Happy Birthday Bade Bhai🎉";
+let i = 0;
+
+function typeEffect() {
+  if (i < text.length) {
+    document.getElementById("text").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeEffect, 80);
+  } else {
+    setTimeout(() => showScreen(2), 1500);
+  }
+}
+typeEffect();
+
+// Screen change
+function showScreen(num) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById("screen" + num).classList.add("active");
+}
+
+// 💓 Hearts
+setInterval(()=>{
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💓";
+  h.style.left=Math.random()*100+"%";
+  h.style.fontSize=(20+Math.random()*20)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+},500);
+
+// 💥 BEST CONFETTI
+function blastConfetti(){
+
+  // Explosion
+  for(let i=0;i<200;i++){
+    let c=document.createElement("div");
+    c.style.position="fixed";
+    c.style.width="8px";
+    c.style.height="8px";
+    c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    c.style.top="50%";
+    c.style.left="50%";
+
+    let angle=Math.random()*2*Math.PI;
+    let dist=Math.random()*500;
+
+    let x=Math.cos(angle)*dist;
+    let y=Math.sin(angle)*dist;
+
+    c.style.transition="1.8s";
+    document.body.appendChild(c);
+
+    setTimeout(()=>{
+      c.style.transform=`translate(${x}px,${y}px)`;
+      c.style.opacity=0;
+    },50);
+
+    setTimeout(()=>c.remove(),1800);
+  }
+
+  // Rain
+  for(let i=0;i<120;i++){
+    let c=document.createElement("div");
+    c.style.position="fixed";
+    c.style.width="6px";
+    c.style.height="12px";
+    c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    c.style.top="-10px";
+    c.style.left=Math.random()*window.innerWidth+"px";
+
+    c.style.transition="top 3s linear";
+    document.body.appendChild(c);
+
+    setTimeout(()=>{ c.style.top="100vh"; },50);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+
+// 🎂 Cake click
+function cutCake(){
+  let music=document.getElementById("music");
+  music.currentTime=0;
+  music.play();
+
+  let cake=document.getElementById("cake");
+  cake.style.transform="scale(1.1)";
+
+  blastConfetti();
+
+  setTimeout(()=>showScreen(3),2000);
+  setTimeout(()=>showScreen(4),18000);
+  setTimeout(()=>showScreen(5),36000);
+}
+
+// 🖼️ Slideshow
+let images=[
+  "https://i.postimg.cc/rwgwLLKm/IMG_20251111_144119_428.jpg",
+  "https://i.postimg.cc/pd4x2Vxd/IMG_20251111_144235_909.jpg",
+  "https://i.postimg.cc/5yqMqwzS/IMG_20251111_143534_587.jpg",
+  "https://i.postimg.cc/BvVZXc5q/IMG_20240811_111728_107.jpg",
+  "https://i.postimg.cc/8C9D1kDW/IMG_20240218_192049_056.jpg"
+];
+
+let index=0;
+
+function startSlideshow(){
+  let slide=document.getElementById("slideshow");
+
+  function show(){
+    slide.style.opacity=0;
+
+    setTimeout(()=>{
+      slide.src=images[index];
+      slide.style.transform="scale(1.1)";
+      slide.style.opacity=1;
+    },500);
+
+    index=(index+1)%images.length;
+  }
+
+  show();
+  setInterval(show,3000);
+}
+
+setTimeout(startSlideshow,7000);
+
+</script>
+
+</body>
+</html>
