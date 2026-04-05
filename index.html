@@ -11,44 +11,47 @@
 html, body {
   margin: 0;
   padding: 0;
+  overflow: hidden; /* ❌ no scroll */
   background: black;
   color: white;
   font-family: Arial;
-  overflow-x: hidden;
 }
 
-/* SCROLL */
-.container {
+/* SCREEN */
+.screen {
+  position: absolute;
+  width: 100%;
   height: 100vh;
-  overflow-y: scroll;
-}
-
-/* SECTION */
-.section {
-  height: 100vh;
+  top: 100%;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
+  transition: 1s ease;
 }
 
-/* 🎂 CAKE FIX (MAIN FIX) */
+/* ACTIVE SCREEN */
+.active {
+  top: 0;
+}
+
+/* PREVIOUS SCREEN (slide up) */
+.up {
+  top: -100%;
+}
+
+/* CAKE */
 #cake {
-  width: 220px !important;
-  height: auto !important;
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+  width: 220px;
+  margin-bottom: 20px;
 }
 
-/* IMAGE */
+/* IMAGES */
 img {
   max-width: 90%;
   max-height: 50vh;
-  object-fit: contain;
   border-radius: 15px;
 }
 
@@ -56,36 +59,14 @@ img {
 h1 { font-size: 7vw; }
 h2 { font-size: 5vw; }
 
-/* LAST */
-#last h1 { font-size: 9vw; }
-#last h2 { font-size: 6vw; }
-
 /* BUTTON */
 button {
   padding: 12px 25px;
   font-size: 18px;
-  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  background: #ff4b2b;
   color: white;
   border: none;
-  border-radius: 12px;
-  margin-top: 20px;
-}
-
-/* STARS */
-.stars::after {
-  content: "";
-  position: fixed;
-  width: 2px;
-  height: 2px;
-  background: white;
-  box-shadow:
-    20px 30px white, 100px 150px white, 200px 80px white,
-    300px 200px white, 400px 120px white;
-  animation: twinkle 2s infinite alternate;
-}
-@keyframes twinkle {
-  from {opacity: 0.3;}
-  to {opacity: 1;}
+  border-radius: 10px;
 }
 
 /* HEARTS */
@@ -103,63 +84,68 @@ button {
 
 <body>
 
-<div class="stars"></div>
-
-<!-- MUSIC -->
-<audio id="music" preload="auto">
+<audio id="music">
   <source src="https://files.catbox.moe/k1lm56.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
+<!-- Screens -->
+<div class="screen active" id="s1">
+  <h1 id="text"></h1>
+</div>
 
-  <!-- 1 -->
-  <div class="section">
-    <h1 id="text"></h1>
-  </div>
+<div class="screen" id="s2">
+  <img id="cake" src="https://i.postimg.cc/QdnZbNFk/Pngtree_happy_birthday_cake_transparent_background_14578946.png">
+  <button onclick="cutCake()">🎂 Cake Cut Kare</button>
+</div>
 
-  <!-- 2 (CAKE FIXED) -->
-  <div class="section">
-    <img id="cake" src="https://i.postimg.cc/QdnZbNFk/Pngtree_happy_birthday_cake_transparent_background_14578946.png">
-    <button onclick="cutCake()">🎂 Cake Cut Kare</button>
-  </div>
+<div class="screen" id="s3">
+  <h2>
+  बड़े भाई तो सच में बड़े ही होते हैं,<br>
+  हर खुशी को खास बना देते हैं ❤️
+  </h2>
+</div>
 
-  <!-- 3 -->
-  <div class="section">
-    <h2>
-    बड़े भाई तो सच में बड़े ही होते हैं,<br>
-    हर खुशी को खास बना देते हैं,<br>
-    कभी कार में घुमाना, कभी पार्टी की जान बन जाना,<br>
-    उनके साथ हर पल यादगार बन जाता है ❤️
-    </h2>
-  </div>
+<div class="screen" id="s4">
+  <img id="slideshow">
+</div>
 
-  <!-- 4 -->
-  <div class="section">
-    <img id="slideshow">
-  </div>
-
-  <!-- 5 -->
-  <div class="section" id="last">
-    <h1>🎉 Happy Birthday 🎉</h1>
-    <h2>Bade Bhai ❤️</h2>
-  </div>
-
+<div class="screen" id="s5">
+  <h1>🎉 Happy Birthday 🎉</h1>
+  <h2>Bade Bhai ❤️</h2>
 </div>
 
 <script>
 
 /* TEXT */
-let text = "Happy Birthday Bade Bhai 🎉";
-let i = 0;
+let text="Happy Birthday Bade Bhai 🎉";
+let i=0;
 
-function typeEffect() {
-  if (i < text.length) {
-    document.getElementById("text").innerHTML += text.charAt(i);
+function typeEffect(){
+  if(i<text.length){
+    document.getElementById("text").innerHTML+=text.charAt(i);
     i++;
-    setTimeout(typeEffect, 80);
+    setTimeout(typeEffect,80);
+  } else {
+    setTimeout(()=>nextScreen(),1500);
   }
 }
 typeEffect();
+
+/* SCREEN CHANGE (SLIDE UP) */
+let current=1;
+
+function nextScreen(){
+  let cur=document.getElementById("s"+current);
+  let next=document.getElementById("s"+(current+1));
+
+  if(next){
+    cur.classList.remove("active");
+    cur.classList.add("up");
+
+    next.classList.add("active");
+    current++;
+  }
+}
 
 /* HEARTS */
 setInterval(()=>{
@@ -167,14 +153,13 @@ setInterval(()=>{
   h.className="heart";
   h.innerHTML="💓";
   h.style.left=Math.random()*100+"%";
-  h.style.fontSize=(20+Math.random()*20)+"px";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),5000);
 },500);
 
 /* CONFETTI */
 function blastConfetti(){
-  for(let i=0;i<200;i++){
+  for(let i=0;i<150;i++){
     let c=document.createElement("div");
     c.style.position="fixed";
     c.style.width="8px";
@@ -204,10 +189,13 @@ function blastConfetti(){
 /* CAKE */
 function cutCake(){
   let music=document.getElementById("music");
-  music.currentTime=0;
   music.play();
 
   blastConfetti();
+
+  setTimeout(()=>nextScreen(),2000);
+  setTimeout(()=>nextScreen(),9000);
+  setTimeout(()=>nextScreen(),15000);
 }
 
 /* SLIDESHOW */
@@ -221,11 +209,11 @@ let images=[
 
 let index=0;
 
-function startSlideshow(){
-  let slide=document.getElementById("slideshow");
+function startSlide(){
+  let img=document.getElementById("slideshow");
 
   function show(){
-    slide.src=images[index];
+    img.src=images[index];
     index=(index+1)%images.length;
   }
 
@@ -233,7 +221,7 @@ function startSlideshow(){
   setInterval(show,3000);
 }
 
-startSlideshow();
+startSlide();
 
 </script>
 
