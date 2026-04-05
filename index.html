@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Happy Birthday 🎉</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 
-/* ✅ BODY FIX (no white issue) */
+/* ✅ BODY FIX */
 body {
   margin: 0;
   background: linear-gradient(135deg, #000000, #1a1a1a);
@@ -16,7 +9,7 @@ body {
   text-align: center;
   overflow-y: auto;
   overflow-x: hidden;
-  scroll-behavior: smooth;/* 👈 ye change karo */
+  scroll-behavior: smooth;
 }
 
 /* 🌌 Stars */
@@ -47,15 +40,20 @@ body {
   to {transform: translateY(-100vh);}
 }
 
-/* ✅ SCREEN TOP ALIGN FIX */
+/* 🔥 PERFECT CENTER FIX */
 .screen {
   display: none;
   height: 100vh;
   width: 100%;
-  justify-content: flex-start;   /* 🔥 TOP */
-  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;   /* horizontal center */
+  align-items: center;       /* vertical center */
   flex-direction: column;
-  padding-top: 30px;
+  padding: 20px;
   box-sizing: border-box;
 }
 
@@ -65,10 +63,12 @@ body {
 
 /* 🎂 Image FIX */
 img {
-  max-width: 90%;
-  max-height: 35vh;
+  max-width: 85%;
+  max-height: 40vh;
   object-fit: contain;
   border-radius: 15px;
+  display: block;
+  margin: 20px auto;
 }
 
 /* 🎞️ Smooth slideshow */
@@ -77,13 +77,13 @@ img {
 }
 
 /* 📱 Responsive text */
-h1 { font-size: 6vw; }
-h2 { font-size: 5vw; }
-h3 { font-size: 5vw; }
+h1 { font-size: 6vw; margin: 10px 0; }
+h2 { font-size: 5vw; margin: 10px 0; }
+h3 { font-size: 5vw; margin: 10px 0; }
 
-/* 🎉 Final text big */
-#screen5 h1 { font-size: 4vw; }
-#screen5 h2 { font-size: 3vw; }
+/* 🎉 Final text */
+#screen5 h1 { font-size: 7vw; }
+#screen5 h2 { font-size: 5vw; }
 #screen5 h3 { font-size: 5vw; }
 
 /* Button */
@@ -94,6 +94,8 @@ button {
   color: white;
   border: none;
   border-radius: 12px;
+  margin-top: 15px;
+  cursor: pointer;
 }
 
 </style>
