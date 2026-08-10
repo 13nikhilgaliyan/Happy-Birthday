@@ -211,11 +211,11 @@ function cutCake(){
 
 /* SLIDESHOW */
 let images=[
-  "https://i.postimg.cc/rwgwLLKm/IMG_20251111_144119_428.jpg",
-  "https://i.postimg.cc/pd4x2Vxd/IMG_20251111_144235_909.jpg",
-  "https://i.postimg.cc/5yqMqwzS/IMG_20251111_143534_587.jpg",
-  "https://i.postimg.cc/BvVZXc5q/IMG_20240811_111728_107.jpg",
-  "https://i.postimg.cc/8C9D1kDW/IMG_20240218_192049_056.jpg"
+  "https://i.postimg.cc/MZV5gyhJ/IMG-20220620-143053-973.webp",
+  "https://i.postimg.cc/Kv5N8mG9/IMG-20220622-124738-272.webp",
+  "https://i.postimg.cc/BnYB2N1p/IMG-20220823-144646-110.webp",
+  "https://i.postimg.cc/qR8KDGzH/IMG-20220824-121804-577.jpg",
+  "https://i.postimg.cc/431Z87Xs/IMG-20220723-141829-782.webp"
 ];
 
 let index=0;
