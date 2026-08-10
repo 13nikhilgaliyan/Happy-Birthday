@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Birthday 🎉</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+/* BODY */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* ❌ no scroll */
+  background: black;
+  color: white;
+  font-family: Arial;
+}
+
+/* SCREEN */
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  top: 100%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  transition: 1s ease;
+}
+
+/* ACTIVE SCREEN */
+.active {
+  top: 0;
+}
+
+/* PREVIOUS SCREEN (slide up) */
+.up {
+  top: -100%;
+}
+
+/* CAKE */
+#cake {
+  width: 220px;
+  margin-bottom: 20px;
+}
+
+/* IMAGES */
+img {
+  max-width: 90%;
+  max-height: 50vh;
+  border-radius: 15px;
+}
+
+/* TEXT */
+h1 { font-size: 6vw; }
+h2 { font-size: 4vw; }
+h3 { font-size: 7vw; }
+
+/* BUTTON */
+button {
+  padding: 12px 25px;
+  font-size: 18px;
+  background: #ff4b2b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+}
+
+/* HEARTS */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  animation: floatUp 5s linear infinite;
+}
+@keyframes floatUp {
+  to {transform: translateY(-100vh);}
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="music">
+  <source src="https://files.catbox.moe/k1lm56.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Screens -->
+<div class="screen active" id="s1">
+  <h1 id="text"></h1>
+</div>
+
+<div class="screen" id="s2">
+  <img id="cake" src="https://i.postimg.cc/QdnZbNFk/Pngtree_happy_birthday_cake_transparent_background_14578946.png">
+  <button onclick="cutCake()">🎂 Cake Cut Kare</button>
+</div>
+
+<div class="screen" id="s3">
+  <h2>
+"💙 Rab se bas itni si fariyaad rahe,<br>
+Tere chehre par hamesha muskaan rahe,<br>
+Dosti apni yun hi salamat rahe,<br>
+<br>
+Har janam mein tu hi mera jigri yaar rahe,<br>
+🎂 Happy Birthday, Bhai! ❤️,<br>
+<br>
+Happy Birthday Mere Bhai 🎉❤️”
+  </h2>
+</div>
+
+<div class="screen" id="s4">
+  <img id="slideshow">
+</div>
+
+<div class="screen" id="s5">
+  <h1>🎉 HAPPY BIRTHDAY MERE BHAI 🎉</h1>
+  <h2> MAHADEV TUJHE HAMESHA KHUSH RAKHE ❤️</h2>
+  <h3> LOVE YOU JAAN </h3>
+</div>
+
+<script>
+
+/* TEXT */
+let text="Happy Birthday Mere Bhai 🎉";
+let i=0;
+
+function typeEffect(){
+  if(i<text.length){
+    document.getElementById("text").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeEffect,80);
+  } else {
+    // 🔥 AUTO MOVE FIX
+    setTimeout(()=>{
+      nextScreen();
+    },1500); // 1.5 sec baad auto next
+  }
+}
+typeEffect();
+
+/* SCREEN CHANGE (SLIDE UP) */
+let current=1;
+
+function nextScreen(){
+  let cur=document.getElementById("s"+current);
+  let next=document.getElementById("s"+(current+1));
+
+  if(next){
+    cur.classList.remove("active");
+    cur.classList.add("up");
+
+    next.classList.add("active");
+    current++;
+  }
+}
+
+/* HEARTS */
+setInterval(()=>{
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💓";
+  h.style.left=Math.random()*100+"%";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+},500);
+
+/* CONFETTI */
+function blastConfetti(){
+  for(let i=0;i<150;i++){
+    let c=document.createElement("div");
+    c.style.position="fixed";
+    c.style.width="8px";
+    c.style.height="8px";
+    c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    c.style.top="50%";
+    c.style.left="50%";
+
+    let angle=Math.random()*2*Math.PI;
+    let dist=Math.random()*400;
+
+    let x=Math.cos(angle)*dist;
+    let y=Math.sin(angle)*dist;
+
+    c.style.transition="1.5s";
+    document.body.appendChild(c);
+
+    setTimeout(()=>{
+      c.style.transform=`translate(${x}px,${y}px)`;
+      c.style.opacity=0;
+    },50);
+
+    setTimeout(()=>c.remove(),1500);
+  }
+}
+
+/* CAKE */
+function cutCake(){
+  let music=document.getElementById("music");
+  music.play();
+
+  blastConfetti();
+
+  setTimeout(()=>nextScreen(),2000);
+  setTimeout(()=>nextScreen(),18000);
+  setTimeout(()=>nextScreen(),40000);
+}
+
+/* SLIDESHOW */
+let images=[
+  "https://i.postimg.cc/rwgwLLKm/IMG_20251111_144119_428.jpg",
+  "https://i.postimg.cc/pd4x2Vxd/IMG_20251111_144235_909.jpg",
+  "https://i.postimg.cc/5yqMqwzS/IMG_20251111_143534_587.jpg",
+  "https://i.postimg.cc/BvVZXc5q/IMG_20240811_111728_107.jpg",
+  "https://i.postimg.cc/8C9D1kDW/IMG_20240218_192049_056.jpg"
+];
+
+let index=0;
+
+function startSlide(){
+  let img=document.getElementById("slideshow");
+
+  function show(){
+    img.src=images[index];
+    index=(index+1)%images.length;
+  }
+
+  show();
+  setInterval(show,3000);
+}
+
+startSlide();
+
+</script>
+
+</body>
+</html>
